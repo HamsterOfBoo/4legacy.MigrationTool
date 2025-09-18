@@ -8,7 +8,7 @@ using _4legacy.MigrationTool.Core.Generators;
 // Create migration region
 var createCommand = new Command("CreateMigration", "Creates a new migration.");
 
-var dbNameOption = new Option<string>("--database-name", "Database context name.") { Required = true };
+var dbNameOption = new Option<string>("--connectionString", "Database connection string.") { Required = true };
 var migrationNameOption = new Option<string>("--migration-name", "Migration name") { Required = true };
 
 createCommand.Options.Add(dbNameOption);

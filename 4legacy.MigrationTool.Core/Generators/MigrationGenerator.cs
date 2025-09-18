@@ -16,31 +16,32 @@ public class MigrationGenerator
     public async Task CreateMigrationFileAsync(string migrationFilePath, string migrationName, string dbContextIdentifier)
     {
         var timestamp = DateTimeOffset.UtcNow;
-        var timestampUnixTime = timestamp.ToUnixTimeSeconds();
         var fileName = $"{timestamp.ToString("yyyyMMddHHmmss")}_{migrationName}.cs";
         var className = $"{migrationName}";
 
         var usings = new[] { "System.Threading.Tasks", "Microsoft.EntityFrameworkCore", "_4legacy.MigrationTool.Core.Contracts" };
 
-        var namespaceDeclaration = NamespaceDeclaration(IdentifierName("SampleConsumerApp.Migrations"));
+        var namespaceDeclaration = NamespaceDeclaration(IdentifierName("_4legacy.MigrationTool.Migrations"));
 
         var classDeclaration = ClassDeclaration(className)
             .AddModifiers(Token(SyntaxKind.PublicKeyword))
             .AddBaseListTypes(SimpleBaseType(IdentifierName("IMigration")));
 
-        var timestampProperty = PropertyDeclaration(PredefinedType(Token(SyntaxKind.LongKeyword)), "Timestamp")
+        var timestampProperty = PropertyDeclaration(
+                IdentifierName("DateTimeOffset"),
+                "Timestamp")
             .AddModifiers(Token(SyntaxKind.PublicKeyword))
             .WithExpressionBody(
                 ArrowExpressionClause(
-                    LiteralExpression(SyntaxKind.NumericLiteralExpression, Literal(timestampUnixTime))
+                    MemberAccessExpression( // Создает 'DateTime.UtcNow'
+                        SyntaxKind.SimpleMemberAccessExpression,
+                        IdentifierName("DateTimeOffset"),
+                        IdentifierName("UtcNow")
+                    )
                 )
             )
             .WithSemicolonToken(Token(SyntaxKind.SemicolonToken));
         
-        var dbContextProperty = PropertyDeclaration(IdentifierName(Identifier(dbContextIdentifier)), "_dbContext")//dbContextIdentifier)
-            .AddModifiers(Token(SyntaxKind.PrivateKeyword))
-            .WithSemicolonToken(Token(SyntaxKind.SemicolonToken));
-
         var emptyMethodBodyBlock = Block(
             ExpressionStatement(
                 AwaitExpression(
@@ -60,14 +61,20 @@ public class MigrationGenerator
         var upMethod = MethodDeclaration(ParseTypeName("Task"), 
                 Identifier("Up"))
             .AddModifiers(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.AsyncKeyword))
+            .AddParameterListParameters(
+                Parameter(Identifier("context")).WithType(IdentifierName("DbContext"))
+            )
             .WithBody(emptyMethodBodyBlock);
 
         var downMethod = MethodDeclaration(ParseTypeName("Task"), 
                 Identifier("Down"))
             .AddModifiers(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.AsyncKeyword))
+            .AddParameterListParameters(
+                Parameter(Identifier("context")).WithType(IdentifierName("DbContext"))
+            )
             .WithBody(emptyMethodBodyBlock);
 
-        classDeclaration = classDeclaration.AddMembers(timestampProperty, dbContextProperty, upMethod, downMethod);
+        classDeclaration = classDeclaration.AddMembers(timestampProperty, upMethod, downMethod);
         
         var code = CompilationUnit()
             .AddUsings(usings.Select(u => UsingDirective(IdentifierName(u))).ToArray())

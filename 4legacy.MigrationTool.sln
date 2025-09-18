@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4legacy.MigrationTool.UnitT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4Legacy.MigrationTool.Cli", "4Legacy.MigrationTool.Cli\4Legacy.MigrationTool.Cli.csproj", "{ED06FC9F-A9E2-42E3-8F2D-5E2F7B2F6D31}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4legacy.MigrationTool.IntegrationTests", "4legacy.MigrationTool.IntegrationTests\4legacy.MigrationTool.IntegrationTests.csproj", "{CF04D79E-7C3B-49FB-A6FF-F94F0227A8A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prostoblyattestconlol", "Prostoblyattestconlol\Prostoblyattestconlol.csproj", "{F9086D49-6512-4475-9629-ACB96800EB7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{ED06FC9F-A9E2-42E3-8F2D-5E2F7B2F6D31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED06FC9F-A9E2-42E3-8F2D-5E2F7B2F6D31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED06FC9F-A9E2-42E3-8F2D-5E2F7B2F6D31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF04D79E-7C3B-49FB-A6FF-F94F0227A8A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF04D79E-7C3B-49FB-A6FF-F94F0227A8A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF04D79E-7C3B-49FB-A6FF-F94F0227A8A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF04D79E-7C3B-49FB-A6FF-F94F0227A8A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9086D49-6512-4475-9629-ACB96800EB7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9086D49-6512-4475-9629-ACB96800EB7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9086D49-6512-4475-9629-ACB96800EB7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9086D49-6512-4475-9629-ACB96800EB7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
